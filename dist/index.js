@@ -108,8 +108,8 @@ const helpers_1 = __nccwpck_require__(49787);
 async function assumeRoleWithOIDC(params, client, webIdentityToken) {
     delete params.Tags;
     core.info('Assuming role with OIDC');
-    core.debug(params)
-    core.debug(client)
+    const my_result = await client.send(new client_sts_1.GetCallerIdentityCommand({}));
+    console.log(my_result);
     try {
         const creds = await client.send(new client_sts_1.AssumeRoleWithWebIdentityCommand({
             ...params,
