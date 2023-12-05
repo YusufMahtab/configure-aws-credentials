@@ -3,17 +3,16 @@ import fs from 'fs';
 import path from 'path';
 import * as core from '@actions/core';
 import type { AssumeRoleCommandInput, STSClient, Tag } from '@aws-sdk/client-sts';
-import { AssumeRoleCommand, AssumeRoleWithWebIdentityCommand, GetCallerIdentityCommand } from '@aws-sdk/client-sts';
+import { AssumeRoleCommand, AssumeRoleWithWebIdentityCommand } from '@aws-sdk/client-sts';
 import type { CredentialsClient } from './CredentialsClient';
 import { errorMessage, isDefined, sanitizeGitHubVariables } from './helpers';
 
 async function assumeRoleWithOIDC(params: AssumeRoleCommandInput, client: STSClient, webIdentityToken: string) {
   delete params.Tags;
   core.info('Assuming role with OIDC');
-  const my_result = await client.send(
-    new GetCallerIdentityCommand({})
-  )
-  console.log(my_result)
+  for (const [key, value] of Object.entries(process.env)) {
+    core.debug(`${key}: ${value}`);
+  }
   try {
     const creds = await client.send(
       new AssumeRoleWithWebIdentityCommand({
