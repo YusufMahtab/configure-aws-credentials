@@ -10,12 +10,12 @@ import { errorMessage, isDefined, sanitizeGitHubVariables } from './helpers';
 async function assumeRoleWithOIDC(params: AssumeRoleCommandInput, client: STSClient, webIdentityToken: string) {
   delete params.Tags;
   core.info('Assuming role with OIDC');
-//   for (const [key, value] of Object.entries(process.env)) {
-//     core.debug(`${key}: ${value}`);
-//   }
-  core.info("Printing token")
-  core.info(webIdentityToken)
-  core.info("Printed token")
+  for (const [key, value] of Object.entries(process.env)) {
+    core.debug(`${key}: ${value}`);
+  }
+  core.debug("Printing token")
+  core.debug(webIdentityToken)
+  core.debug("Printed token")
   try {
     const creds = await client.send(
       new AssumeRoleWithWebIdentityCommand({
