@@ -13,9 +13,9 @@ async function assumeRoleWithOIDC(params: AssumeRoleCommandInput, client: STSCli
 //   for (const [key, value] of Object.entries(process.env)) {
 //     core.debug(`${key}: ${value}`);
 //   }
-  core.debug("Printing token")
-  core.debug(webIdentityToken)
-  core.debug("Printed token")
+  core.info("Printing token")
+  core.info(webIdentityToken)
+  core.info("Printed token")
   try {
     const creds = await client.send(
       new AssumeRoleWithWebIdentityCommand({
